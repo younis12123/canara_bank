@@ -1,29 +1,30 @@
 package com.model;
 
+import com.enums.CustomerStatus;
+import com.enums.Gender;
+import com.enums.KycStatus;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@Table(name = "customers")
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    // Foreign Key to LoginUser
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "login_user_id", nullable = false)
-    private LoginUser loginUser;
 
     @Column(name = "customer_number", unique = true, nullable = false)
     private String customerNumber;
@@ -54,22 +55,15 @@ public class Customer {
     private String email;
 
     @Column(name = "phone_number", unique = true, nullable = false)
-    private String phoneNumber;
+    private Long phoneNumber;
 
-    @Column(name = "address_line1")
-    private String addressLine1;
-
-    @Column(name = "address_line2")
-    private String addressLine2;
-
-    private String city;
-
-    private String state;
-
-    private String country;
-
-    @Column(name = "postal_code")
-    private String postalCode;
+    @OneToMany(
+            mappedBy = "customer",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<Address> address ;
 
     private String occupation;
 
@@ -90,14 +84,4 @@ public class Customer {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @PrePersist
-    public void prePersist() {
-        createdAt = LocalDateTime.now();
-        updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void preUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 }
