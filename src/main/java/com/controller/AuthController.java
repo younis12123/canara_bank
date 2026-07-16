@@ -14,9 +14,11 @@ public class AuthController {
     @Autowired
     private LoginService loginService ;
 
-    @PostMapping("/login")
-    public String login(@RequestBody LoginRequestDto loginRequestDto) {
+    @PostMapping("/customer/login")
+    public String custlogin(@RequestBody LoginRequestDto loginRequestDto) {
         return loginService.login(loginRequestDto);
     }
+
+
 
 }

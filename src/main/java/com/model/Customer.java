@@ -3,6 +3,7 @@ package com.model;
 import com.enums.CustomerStatus;
 import com.enums.Gender;
 import com.enums.KycStatus;
+import com.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,7 +27,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "customer_number", unique = true, nullable = false)
+    @Column(name = "customer_number", unique = true, nullable = false , updatable = false)
     private String customerNumber;
 
     @Column(name = "first_name", nullable = false)
@@ -63,7 +64,7 @@ public class Customer {
             orphanRemoval = true,
             fetch = FetchType.LAZY
     )
-    private List<Address> address ;
+    private Address address ;
 
     private String occupation;
 

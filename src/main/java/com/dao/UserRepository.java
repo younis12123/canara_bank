@@ -3,8 +3,10 @@ package com.dao;
 import com.model.Users;
 import com.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface UserRepo extends JpaRepository<Users,Long> {
+@Repository
+public interface UserRepository extends JpaRepository<Users,Long> {
 
     Users findByUserName(String userName);
 }

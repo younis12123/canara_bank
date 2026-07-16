@@ -28,12 +28,8 @@ public class Employee {
     @Column(name = "employee_code",
             nullable = false,
             unique = true,
-            updatable = false,
-            length = 20)
+            updatable = false)
     private String employeeCode;
-
-    @Column(nullable = false)
-    private  String password ;
 
     // Personal Details
     @Column(name = "first_name", nullable = false, length = 50)
