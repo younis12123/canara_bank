@@ -1,7 +1,8 @@
 package com.serviceimpl;
 
-import com.dao.UserRepo;
+import com.dao.UserRepository;
 import com.dto.LoginRequestDto;
+import com.enums.Role;
 import com.model.Users;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class LoginService {
 
-    private final UserRepo userRepo;
+    private final UserRepository userRepo;
 
     private final JWTService jwtService ;
 
@@ -22,16 +23,35 @@ public class LoginService {
 
     private final AuthenticationManager authentication;
 
-    public String login(LoginRequestDto loginRequestDto) {
+    public String customerLogin(LoginRequestDto loginRequestDto) {
 
         Authentication auth =
                 authentication.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getUserName(), loginRequestDto.getPassword()));
         if (auth.isAuthenticated()) {
             Users user = userRepo.findByUserName(loginRequestDto.getUserName());
-            return jwtService.generateToken(loginRequestDto.getUserName(),user.getRole());
+            if(Role.CUSTOMER.equals(user.getRole())) {
+                return jwtService.generateToken(loginRequestDto.getUserName(), user.getRole());
+            }
+            return " user is not authorised";
         }
         return " user is not authenticated";
 
     }
+
+    public String employeeLogin(LoginRequestDto loginRequestDto) {
+
+        Authentication auth =
+                authentication.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getUserName(),loginRequestDto.getPassword()));
+        if (auth.isAuthenticated()) {
+            Users user = userRepo.findByUserName(loginRequestDto.getUserName());
+            if(Role.EMPLOYEE.equals(user.getRole()) || Role.MANAGER.equals(user.getRole())){
+                return jwtService.generateToken(loginRequestDto.getUserName(), user.getRole());
+            }
+            return " user is not authorised";
+        }
+        return " user is not authenticated";
+
+    }
+
 
 }

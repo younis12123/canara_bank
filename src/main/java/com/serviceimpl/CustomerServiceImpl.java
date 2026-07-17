@@ -2,37 +2,36 @@ package com.serviceimpl;
 
 import com.dao.CustomerRepository;
 import com.dao.UserRepository;
-import com.dto.AddCusomerRequestDto;
+import com.dto.AddCustomerRequestDto;
 import com.enums.CustomerStatus;
-import com.enums.Role;
+import com.enums.KycStatus;
 import com.mapper.CustomerMapper;
+import com.model.Address;
 import com.model.Customer;
-import com.model.Users;
 import com.service.CustomerService;
 import com.util.CustomerUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
-public class CustomerServiceimpl implements CustomerService {
+public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository customerRepository ;
 
-    private final UserRepository userRepository ;
-
     @Override
-    public String addCustomer(AddCusomerRequestDto addCusomerRequestDto) {
-        Customer customer = CustomerMapper.toEntity(addCusomerRequestDto);
+    public String addCustomer(AddCustomerRequestDto addCustomerRequestDto) {
+        Customer customer = CustomerMapper.toEntity(addCustomerRequestDto);
         customer.setCustomerNumber(CustomerUtils.generateCustomerNumber());
         customer.setCustomerStatus(CustomerStatus.REQUESTED);
+        customer.setCreatedAt(LocalDateTime.now());
+        customer.setUpdatedAt(LocalDateTime.now());
+        customer.setKycStatus(KycStatus.PENDING);
+        customer.getAddress().setCustomer(customer);
         customerRepository.save(customer) ;
 
-        Users user = new Users();
-        user.setUserName(customer.getCustomerNumber());
-        user.setRole(Role.CUSTOMER);
-        user.setPassword();
-
-        return "You Account have been created , please check email further Info"
+        return "You Account have been created , please check email further Info" ;
     }
 }

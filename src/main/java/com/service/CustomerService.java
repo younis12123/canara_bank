@@ -1,8 +1,8 @@
 package com.service;
 
-import com.dto.AddCusomerRequestDto;
+import com.dto.AddCustomerRequestDto;
 
 public interface CustomerService {
 
-    public String addCustomer(AddCusomerRequestDto addCusomerRequestDto) ;
+    public String addCustomer(AddCustomerRequestDto addCusomerRequestDto) ;
 }

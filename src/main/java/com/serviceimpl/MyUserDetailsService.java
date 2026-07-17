@@ -1,5 +1,5 @@
 package com.serviceimpl;
-import com.dao.UserRepo;
+import com.dao.UserRepository;
 import com.model.Users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class MyUserDetailsService implements UserDetailsService {
 
     @Autowired
-    UserRepo userRepo ;
+    UserRepository userRepo ;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {

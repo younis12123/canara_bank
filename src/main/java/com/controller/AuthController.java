@@ -15,10 +15,14 @@ public class AuthController {
     private LoginService loginService ;
 
     @PostMapping("/customer/login")
-    public String custlogin(@RequestBody LoginRequestDto loginRequestDto) {
-        return loginService.login(loginRequestDto);
+    public String custmoerLogin(@RequestBody LoginRequestDto loginRequestDto) {
+        return loginService.customerLogin(loginRequestDto);
     }
 
+    @PostMapping("/employee/login")
+    public String EmployeeLogin(@RequestBody LoginRequestDto loginRequestDto)  {
+        return loginService.employeeLogin(loginRequestDto) ;
+    }
 
 
 }

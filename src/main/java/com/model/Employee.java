@@ -4,6 +4,7 @@ import com.enums.Department;
 import com.enums.Designation;
 import com.enums.EmployeeStatus;
 import com.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -107,8 +108,10 @@ public class Employee {
     private LocalDateTime updatedAt;
 
     @Column(name = "created_by")
+    @JsonIgnore
     private String createdBy;
 
     @Column(name = "updated_by")
+    @JsonIgnore
     private String updatedBy;
 }

@@ -1,7 +1,7 @@
 package com.controller;
 
-import com.dto.AddCusomerRequestDto;
-import com.serviceimpl.CustomerServiceimpl;
+import com.dto.AddCustomerRequestDto;
+import com.serviceimpl.CustomerServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    private final CustomerServiceimpl customerServiceimpl ;
+    private final CustomerServiceImpl customerServiceimpl ;
 
     @PostMapping("/apply")
-    public String addCustomer(@RequestBody AddCusomerRequestDto addCusomerRequestDto) {
-        return customerServiceimpl.addCustomer(addCusomerRequestDto) ;
+    public String addCustomer(@RequestBody AddCustomerRequestDto addCustomerRequestDto) {
+        return customerServiceimpl.addCustomer(addCustomerRequestDto) ;
     }
 
 

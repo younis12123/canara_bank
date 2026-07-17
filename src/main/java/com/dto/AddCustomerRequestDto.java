@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AddCusomerRequestDto {
+public class AddCustomerRequestDto {
 
     @NotBlank(message = "First name is required")
     @Size(max = 50, message = "First name must be less than 50 characters")
@@ -57,8 +57,5 @@ public class AddCusomerRequestDto {
     @Digits(integer = 15, fraction = 2, message = "Annual income must be a valid amount")
     private BigDecimal annualIncome;
 
-    private KycStatus kycStatus;
-
-    private CustomerStatus customerStatus;
 
 }

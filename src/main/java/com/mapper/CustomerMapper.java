@@ -1,6 +1,6 @@
 package com.mapper;
 
-import com.dto.AddCusomerRequestDto;
+import com.dto.AddCustomerRequestDto;
 import com.dto.AddressDto;
 import com.model.Address;
 import com.model.Customer;
@@ -8,7 +8,7 @@ import com.model.Customer;
 
 public class CustomerMapper {
 
-    public static Customer toEntity(AddCusomerRequestDto addCusomerRequestDto) {
+    public static Customer toEntity(AddCustomerRequestDto addCusomerRequestDto) {
         Customer customer = Customer.builder().firstName(addCusomerRequestDto.getFirstName()).
                 middleName(addCusomerRequestDto.getMiddleName()).
                 lastName(addCusomerRequestDto.getLastName()).

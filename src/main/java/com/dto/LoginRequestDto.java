@@ -1,5 +1,6 @@
 package com.dto;
 
+import com.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LoginRequestDto {
 
-    String userName;
-    String password;
+    private String userName;
+    private String password;
+
 }
 

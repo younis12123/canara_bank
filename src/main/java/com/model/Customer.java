@@ -4,6 +4,8 @@ import com.enums.CustomerStatus;
 import com.enums.Gender;
 import com.enums.KycStatus;
 import com.enums.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,12 +60,12 @@ public class Customer {
     @Column(name = "phone_number", unique = true, nullable = false)
     private Long phoneNumber;
 
-    @OneToMany(
+    @OneToOne(
             mappedBy = "customer",
             cascade = CascadeType.ALL,
-            orphanRemoval = true,
             fetch = FetchType.LAZY
     )
+    @JsonManagedReference
     private Address address ;
 
     private String occupation;
@@ -80,9 +82,11 @@ public class Customer {
     private CustomerStatus customerStatus;
 
     @Column(name = "created_at", updatable = false)
+    @JsonIgnore
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
+    @JsonIgnore
     private LocalDateTime updatedAt;
 
 }
