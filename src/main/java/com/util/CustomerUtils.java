@@ -19,7 +19,4 @@ public class CustomerUtils {
         return UUID.randomUUID().toString().substring(0, 8);
     }
 
-    public static String encodePassword(String rawPassword) {
-        return new BCryptPasswordEncoder().encode(rawPassword);
-    }
 }

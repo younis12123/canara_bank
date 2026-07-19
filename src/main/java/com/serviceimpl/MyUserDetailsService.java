@@ -23,6 +23,12 @@ public class MyUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found with username or email: " + userName);
         }
 
-        return User.builder().username(user.getUserName()).password(user.getPassword()).build();
+        return User.builder().username(user.getUserName()).password(user.getPassword())
+                .roles(user.getRole().name()) // add role
+                .accountExpired(!user.getAccountNonExpired())
+                .accountLocked(!user.getAccountNonLocked())
+                .credentialsExpired(!user.getCredentialsNonExpired())
+                .disabled(!user.getEnabled())
+                .build();
     }
 }

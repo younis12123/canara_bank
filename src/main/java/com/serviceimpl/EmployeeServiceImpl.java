@@ -1,22 +1,19 @@
 package com.serviceimpl;
 
+import com.config.SecurityConfig;
 import com.dao.CustomerRepository;
 import com.dao.UserRepository;
 import com.enums.CustomerStatus;
 import com.mapper.UserMapper;
 import com.model.Customer;
-import com.model.Employee;
 import com.model.Users;
 import com.service.EmployeeService;
 import com.util.CustomerUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +22,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final CustomerRepository customerRepository ;
 
     private final UserRepository userRepository ;
+
+    private final MailService mailService ;
+
+    private final SecurityConfig securityConfig ;
+
 
     @Override
     public List<Customer> viewAllActiveCustomers() {
@@ -43,9 +45,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         customerRepository.save(customer) ;
         Users user = UserMapper.toUser(customer);
         String tempPassword = CustomerUtils.generateTempPassword();
-        String encodedPassword = CustomerUtils.encodePassword(tempPassword);
+        System.out.println(tempPassword);
+        String encodedPassword = securityConfig.passwordEncoder().encode(tempPassword);
         user.setPassword(encodedPassword);
         userRepository.save(user) ;
+
+        mailService.sendApprovalMail(customer.getFirstName(),user.getUserName(),tempPassword,customer.getEmail(),"bhargavvaddi09@gmail.com");
+
         return "Customer "+ customerId + " have been created send a email" ;
     }
 

@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,16 +18,22 @@ public class LoginService {
 
     private final JWTService jwtService ;
 
-    private final PasswordEncoder passwordEncoder;
-
     private final AuthenticationManager authentication;
 
     public String customerLogin(LoginRequestDto loginRequestDto) {
 
-        Authentication auth =
+        System.out.println("service");
+
+       Authentication auth =
                 authentication.authenticate(new UsernamePasswordAuthenticationToken(loginRequestDto.getUserName(), loginRequestDto.getPassword()));
+        
+       System.out.println(auth);
+
         if (auth.isAuthenticated()) {
             Users user = userRepo.findByUserName(loginRequestDto.getUserName());
+
+            System.out.println(user);
+            
             if(Role.CUSTOMER.equals(user.getRole())) {
                 return jwtService.generateToken(loginRequestDto.getUserName(), user.getRole());
             }
