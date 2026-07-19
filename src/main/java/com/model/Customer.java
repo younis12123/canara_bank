@@ -3,7 +3,6 @@ package com.model;
 import com.enums.CustomerStatus;
 import com.enums.Gender;
 import com.enums.KycStatus;
-import com.enums.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -15,8 +14,6 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Data
@@ -27,7 +24,7 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long customerId;
 
     @Column(name = "customer_number", unique = true, nullable = false , updatable = false)
     private String customerNumber;

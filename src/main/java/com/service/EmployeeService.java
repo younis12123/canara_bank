@@ -7,5 +7,13 @@ import java.util.List;
 
 public interface EmployeeService {
 
-    List<Customer> getAllCustomersApplication(); ;
+    List<Customer> viewAllActiveCustomers();
+
+    List<Customer> viewAllCustomersApplication();
+
+    String approveCustomer(Long customerId);
+
+    Customer rejectCustomer(Long id);
+
+    ;
 }

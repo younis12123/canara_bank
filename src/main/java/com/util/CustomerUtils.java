@@ -1,14 +1,12 @@
 package com.util;
 
-import java.security.SecureRandom;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.util.Random;
+import java.util.UUID;
 
 public class CustomerUtils {
 
-    private static final String CHARACTERS =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
-
-    private static final int PASSWORD_LENGTH = 12;
 
     public static String generateCustomerNumber() {
         Random random = new Random();
@@ -16,15 +14,12 @@ public class CustomerUtils {
         return String.format("CS%012d", number);
     }
 
-    public static String generateTemporaryPassword() {
-        SecureRandom random = new SecureRandom();
-        StringBuilder sb = new StringBuilder(PASSWORD_LENGTH);
+    public static String generateTempPassword() {
+        // Take first 8 characters from UUID
+        return UUID.randomUUID().toString().substring(0, 8);
+    }
 
-        for (int i = 0; i < PASSWORD_LENGTH; i++) {
-            int index = random.nextInt(CHARACTERS.length());
-            sb.append(CHARACTERS.charAt(index));
-        }
-
-        return sb.toString();
+    public static String encodePassword(String rawPassword) {
+        return new BCryptPasswordEncoder().encode(rawPassword);
     }
 }
