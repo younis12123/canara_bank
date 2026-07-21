@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.util.Random;
 import java.util.UUID;
 
-public class CustomerUtils {
+public class Utils {
 
 
     public static String generateCustomerNumber() {
@@ -23,6 +23,11 @@ public class CustomerUtils {
         Random random = new Random();
         long number = 100000000000L + (long)(random.nextDouble() * 900000000000L);
         return String.valueOf(number);
+    }
+    public static String generateEmployeeNumber() {
+        Random random = new Random();
+        long number = (long) (random.nextDouble() * 1_000_000_000_000L);
+        return String.format("EMP%012d", number);
     }
 
 }

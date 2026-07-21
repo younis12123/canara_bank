@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.dto.AddBranchRequestDto;
+import com.dto.AddEmployeeRequestDto;
 import com.model.Branch;
 import com.model.Customer;
 import com.service.EmployeeService;
@@ -50,7 +51,8 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.deleteBranch(branchId));
     }
 
-//    @PostMapping()
-//    public
-
+    @PostMapping("/addnewemployee/{branchId}")
+    public String addNewEmployee(@RequestBody AddEmployeeRequestDto addEmployeeRequestDto ,@PathVariable Long branchId) {
+        return employeeService.addNewEmployee(addEmployeeRequestDto ,branchId);
+    }
 }

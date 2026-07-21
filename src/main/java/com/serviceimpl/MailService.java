@@ -70,5 +70,43 @@ public class MailService {
 
     }
 
+    @Async
+    public void sendEmployeeApprovalMail(String employeeFirstName,
+                                         String userName,
+                                         String tempPassword,
+                                         String recipientEmail,
+                                         String ccEmail) {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setFrom("ali.java00@gmail.com");
+        mail.setTo(recipientEmail);
+
+        if (ccEmail != null) {
+            mail.setCc(ccEmail);
+        }
+
+        mail.setSubject("Employee Account Approval - Canara Bank");
+
+        mail.setText(
+                "Hi " + employeeFirstName + ",\n\n" +
+                        "Welcome to Canara Bank! Your employee account has been successfully created.\n\n" +
+                        "Here are your login details:\n" +
+                        "User ID: " + userName + "\n" +
+                        "Temporary Password: " + tempPassword + "\n\n" +
+                        "For security reasons, please change your password after your first login.\n\n" +
+                        "We’re excited to have you on the team.\n\n" +
+                        "Regards,\n" +
+                        "HR Team - Canara Bank"
+        );
+
+        try {
+            javaMailSender.send(mail);
+            System.out.println("Employee mail sent successfully!");
+        } catch (Exception e) {
+            System.err.println("Error while sending employee email: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
 }
 

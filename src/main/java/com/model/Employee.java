@@ -5,6 +5,7 @@ import com.enums.Designation;
 import com.enums.EmployeeStatus;
 import com.enums.Gender;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -85,6 +86,7 @@ public class Employee {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id", nullable = false)
+    @JsonManagedReference
     private Branch branch;
 
     @Column(name = "joining_date", nullable = false)
@@ -101,6 +103,7 @@ public class Employee {
     // Self Reference (Manager)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
+    @JsonManagedReference
     private Employee manager;
 
     // Audit Fields

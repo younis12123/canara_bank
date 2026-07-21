@@ -9,7 +9,7 @@ import com.mapper.CustomerMapper;
 import com.model.Branch;
 import com.model.Customer;
 import com.service.CustomerService;
-import com.util.CustomerUtils;
+import com.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 
         Customer customer = CustomerMapper.toEntity(addCustomerRequestDto);
-        customer.setCustomerNumber(CustomerUtils.generateCustomerNumber());
+        customer.setCustomerNumber(Utils.generateCustomerNumber());
 
 
         Branch branch = branchRepository.findById(branchId)

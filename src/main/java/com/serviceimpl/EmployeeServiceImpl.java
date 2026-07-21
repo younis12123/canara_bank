@@ -1,25 +1,21 @@
 package com.serviceimpl;
 
 import com.config.SecurityConfig;
-import com.dao.BankAccountRepository;
-import com.dao.BranchRepository;
-import com.dao.CustomerRepository;
-import com.dao.UserRepository;
+import com.dao.*;
 import com.dto.AddBranchRequestDto;
+import com.dto.AddEmployeeRequestDto;
 import com.enums.CustomerStatus;
 import com.enums.KycStatus;
 import com.mapper.BankAccountMapper;
 import com.mapper.BranchMapper;
-import com.mapper.UserMapper;
-import com.model.BankAccount;
-import com.model.Branch;
-import com.model.Customer;
-import com.model.Users;
+import com.mapper.CustomerMapper;
+import com.mapper.EmployeeMapper;
+import com.model.*;
 import com.service.EmployeeService;
-import com.util.CustomerUtils;
-import jakarta.persistence.EntityManager;
+import com.util.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -40,6 +36,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final BankAccountRepository bankAccountRepository ;
 
+    private final EmployeeRepository employeeRepository ;
+
 
     @Override
     public List<Customer> viewAllActiveCustomers() {
@@ -58,8 +56,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         customer.setKycStatus(KycStatus.VERIFIED);
         customerRepository.save(customer) ;
 
-        Users user = UserMapper.toUser(customer);
-        String tempPassword = CustomerUtils.generateTempPassword();
+        Users user = CustomerMapper.toUser(customer);
+        String tempPassword = Utils.generateTempPassword();
         String encodedPassword = securityConfig.passwordEncoder().encode(tempPassword);
         user.setPassword(encodedPassword);
         userRepository.save(user) ;
@@ -68,7 +66,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         bankAccount.setBranch(customer.getBranch());
 
         // need to use postgrase sql for sequence
-        bankAccount.setAccountNumber(CustomerUtils.generateAccountNumber());
+        bankAccount.setAccountNumber(Utils.generateAccountNumber());
         BankAccount account = bankAccountRepository.save(bankAccount);
 
         mailService.sendApprovalMail(customer.getFirstName(),user.getUserName(),tempPassword,customer.getEmail(),"shaik.younis1212@gmail.com");
@@ -105,5 +103,38 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new NoSuchElementException("Branch not found with id: " + branchId));
         branchRepository.delete(branch);
         return "Branch with ID " + branchId + " deleted successfully";
+    }
+
+    @Override
+    public String addNewEmployee(AddEmployeeRequestDto addEmployeeRequestDto ,Long branchId) {
+        Employee employee = EmployeeMapper.toEmployee(addEmployeeRequestDto) ;
+        employee.setEmployeeCode(Utils.generateEmployeeNumber()) ;
+
+        Branch branch = branchRepository.findById(branchId)
+                .orElseThrow(() -> new NoSuchElementException("Branch not found with id: " + branchId));
+        employee.setBranch(branch);
+
+        if (addEmployeeRequestDto.getManagerId() != null) {
+            Employee manager = employeeRepository.findById(addEmployeeRequestDto.getManagerId())
+                    .orElseThrow(() -> new RuntimeException("Manager not found"));
+            employee.setManager(manager);
+        } else {
+            // no manager assigned
+            employee.setManager(null);
+        }
+
+        employeeRepository.save(employee) ;
+
+        Users user = EmployeeMapper.toUser(employee);
+        user.setUserName(employee.getEmployeeCode());
+        String tempPassword = Utils.generateTempPassword();
+        String encodedPassword = securityConfig.passwordEncoder().encode(tempPassword);
+        user.setPassword(encodedPassword);
+        userRepository.save(user) ;
+
+        mailService.sendEmployeeApprovalMail(employee.getFirstName(),user.getUserName(),tempPassword,employee.getEmail(),"shaik.younis1212@gmail.com");
+
+        return "Employee "+ addEmployeeRequestDto.getFirstName() + " have been created send a email" ;
+
     }
 }

@@ -35,12 +35,13 @@ public class LoginService {
             System.out.println(user);
             
             if(Role.CUSTOMER.equals(user.getRole())) {
+
+                if (user.getFirstLogin()) { return "PASSWORD_CHANGE_REQUIRED"; }
                 return jwtService.generateToken(loginRequestDto.getUserName(), user.getRole() , user.getFullName());
             }
             return " user is not authorised";
         }
         return " user is not authenticated";
-
     }
 
     public String employeeLogin(LoginRequestDto loginRequestDto) {
@@ -50,6 +51,8 @@ public class LoginService {
         if (auth.isAuthenticated()) {
             Users user = userRepo.findByUserName(loginRequestDto.getUserName());
             if(Role.EMPLOYEE.equals(user.getRole()) || Role.MANAGER.equals(user.getRole())){
+
+                if (user.getFirstLogin()) { return "PASSWORD_CHANGE_REQUIRED"; }
                 return jwtService.generateToken(loginRequestDto.getUserName(), user.getRole() , user.getFullName());
             }
             return " user is not authorised";

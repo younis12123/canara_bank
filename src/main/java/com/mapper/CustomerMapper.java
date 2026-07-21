@@ -2,8 +2,10 @@ package com.mapper;
 
 import com.dto.AddCustomerRequestDto;
 import com.dto.AddressDto;
+import com.enums.Role;
 import com.model.Address;
 import com.model.Customer;
+import com.model.Users;
 
 import java.time.LocalDateTime;
 
@@ -47,6 +49,13 @@ public class CustomerMapper {
                 .updatedAt(LocalDateTime.now())
                 .build();
 
+    }
+
+    public static Users toUser(Customer customer){
+        return Users.builder().userName(customer.getCustomerNumber()).
+                role(Role.CUSTOMER).createdAt(LocalDateTime.now()).
+                fullName(customer.getFullName()).
+                updatedAt(LocalDateTime.now()).build() ;
     }
 
 

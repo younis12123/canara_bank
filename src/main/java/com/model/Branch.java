@@ -1,6 +1,8 @@
 package com.model;
 
 import com.enums.BranchStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,6 +53,7 @@ public class Branch {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
+    @JsonManagedReference
     private Address address;
 
     @Enumerated(EnumType.STRING)
@@ -65,6 +68,7 @@ public class Branch {
             fetch = FetchType.LAZY
     )
     @Builder.Default
+    @JsonIgnore
     private List<Employee> employees = new ArrayList<>();
 
     @OneToMany(
@@ -73,6 +77,7 @@ public class Branch {
             fetch = FetchType.LAZY
     )
     @Builder.Default
+    @JsonIgnore
     private List<BankAccount> bankAccounts = new ArrayList<>();
 
     @Column(name = "created_at", updatable = false)

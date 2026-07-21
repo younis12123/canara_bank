@@ -45,6 +45,10 @@ public class Users {
     private Boolean accountNonExpired = true;
 
     @Builder.Default
+    @Column(name = "first_login", nullable = false)
+    private Boolean firstLogin = true;
+
+    @Builder.Default
     @Column(name = "is_credentials_non_expired", nullable = false)
     private Boolean credentialsNonExpired = true;
 
