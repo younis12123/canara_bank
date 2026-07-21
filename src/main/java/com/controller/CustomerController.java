@@ -17,7 +17,15 @@ public class CustomerController {
         return customerServiceimpl.addCustomer(addCustomerRequestDto , branchId ) ;
     }
 
+    // raise loan
 
+    //loan status
+
+    // create transcation
+
+    // my transcation
+
+    // profile
 
 
 
