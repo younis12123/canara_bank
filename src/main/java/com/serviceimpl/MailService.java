@@ -39,6 +39,36 @@ public class MailService {
             System.err.println("Error while sending email: " + e.getMessage());
             e.printStackTrace();
         }
+
     }
+
+    @Async
+    public void sendRejectedMail(String customerFirstName, String recipientEmail, String ccEmail) {
+        SimpleMailMessage mail = new SimpleMailMessage();
+        mail.setFrom("ali.java00@gmail.com");
+        mail.setTo(recipientEmail);
+        if (ccEmail != null) {
+            mail.setCc(ccEmail);
+        }
+        mail.setSubject("Account Rejected - Canara Bank");
+
+        mail.setText(
+                "Hi " + customerFirstName + ",\n\n" +
+                        "We regret to inform you that your account application has been rejected.\n\n" +
+                        "For further details, please contact our support team.\n\n" +
+                        "Regards,\n" +
+                        "Canara Bank Team"
+        );
+
+        try {
+            javaMailSender.send(mail);
+            System.out.println("Rejection mail sent successfully!");
+        } catch (Exception e) {
+            System.err.println("Error while sending rejection email: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+    }
+
 }
 

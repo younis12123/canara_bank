@@ -23,7 +23,6 @@ public class BankAccount {
     private Long accountId;
 
     @Column(name = "account_number",
-            nullable = false,
             unique = true,
             updatable = false,
             length = 20)

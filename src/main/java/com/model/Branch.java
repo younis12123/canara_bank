@@ -2,7 +2,10 @@ package com.model;
 
 import com.enums.BranchStatus;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -46,30 +49,9 @@ public class Branch {
             length = 10)
     private String phoneNumber;
 
-    @Column(name = "house_no")
-    private String houseNo;
-
-    private String street;
-
-    private String landmark;
-
-    private String area;
-
-    @Column(nullable = false)
-    private String city;
-
-    @Column(nullable = false)
-    private String district;
-
-    @Column(nullable = false)
-    private String state;
-
-    @Column(nullable = false)
-    private String country;
-
-    @Column(name = "postal_code",
-            nullable = false)
-    private String postalCode;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @Enumerated(EnumType.STRING)
     @Builder.Default
@@ -99,7 +81,7 @@ public class Branch {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Column(name = "created_by")
+    @Column(name = "created_by", updatable = false)
     private String createdBy;
 
     @Column(name = "updated_by")

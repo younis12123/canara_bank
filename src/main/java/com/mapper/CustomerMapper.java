@@ -5,6 +5,8 @@ import com.dto.AddressDto;
 import com.model.Address;
 import com.model.Customer;
 
+import java.time.LocalDateTime;
+
 
 public class CustomerMapper {
 
@@ -20,6 +22,9 @@ public class CustomerMapper {
                 phoneNumber(addCusomerRequestDto.getPhoneNumber())
                 .occupation(addCusomerRequestDto.getOccupation()).
                 annualIncome(addCusomerRequestDto.getAnnualIncome()).
+                fullName(addCusomerRequestDto.getFirstName()+" "+
+                        addCusomerRequestDto.getMiddleName()+ " "+
+                        addCusomerRequestDto.getLastName()).
                 address(CustomerMapper.buildAddressFromRequest(addCusomerRequestDto.getAddress())).build();
 
         return customer;
@@ -38,6 +43,8 @@ public class CustomerMapper {
                 .state(dto.getState())
                 .country(dto.getCountry())
                 .postalCode(dto.getPostalCode())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
 
     }

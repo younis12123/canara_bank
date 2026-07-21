@@ -3,10 +3,7 @@ package com.controller;
 import com.dto.AddCustomerRequestDto;
 import com.serviceimpl.CustomerServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/customer")
@@ -15,9 +12,9 @@ public class CustomerController {
 
     private final CustomerServiceImpl customerServiceimpl ;
 
-    @PostMapping("/apply")
-    public String addCustomer(@RequestBody AddCustomerRequestDto addCustomerRequestDto) {
-        return customerServiceimpl.addCustomer(addCustomerRequestDto) ;
+    @PostMapping("/apply/{branchId}")
+    public String addCustomer(@RequestBody AddCustomerRequestDto addCustomerRequestDto ,@PathVariable Long branchId ) {
+        return customerServiceimpl.addCustomer(addCustomerRequestDto , branchId ) ;
     }
 
 

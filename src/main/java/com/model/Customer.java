@@ -38,6 +38,9 @@ public class Customer {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(name = "full_name", nullable = false, length = 100)
+    private String fullName;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Gender gender;
@@ -85,5 +88,9 @@ public class Customer {
     @Column(name = "updated_at")
     @JsonIgnore
     private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "branch_id")
+    private Branch branch;
 
 }

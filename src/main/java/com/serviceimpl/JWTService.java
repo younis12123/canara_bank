@@ -22,27 +22,18 @@ public class JWTService {
     @Value("${jwt.secret}")
     private String secretkey;
 
-//    public JWTService() {
-//
-//        try {
-//            KeyGenerator keyGen = KeyGenerator.getInstance("HmacSHA256");
-//            SecretKey sk = keyGen.generateKey();
-//            secretkey = Base64.getEncoder().encodeToString(sk.getEncoded());
-//        } catch (NoSuchAlgorithmException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
 
-    public String generateToken(String username , Role role) {
+    public String generateToken(String username , Role role , String fullName) {
         Map<String, Object> claims = new HashMap<>();
 
+        claims.put("fullName", fullName);
+        claims.put("role", role.name());
+
         return Jwts.builder()
-                .claims()
-                .add("role", role.name())
+                .claims(claims)
                 .subject(username)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + 800000000))
-                .and()
                 .signWith(getKey())
                 .compact();
 

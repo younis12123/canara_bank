@@ -35,7 +35,7 @@ public class LoginService {
             System.out.println(user);
             
             if(Role.CUSTOMER.equals(user.getRole())) {
-                return jwtService.generateToken(loginRequestDto.getUserName(), user.getRole());
+                return jwtService.generateToken(loginRequestDto.getUserName(), user.getRole() , user.getFullName());
             }
             return " user is not authorised";
         }
@@ -50,13 +50,12 @@ public class LoginService {
         if (auth.isAuthenticated()) {
             Users user = userRepo.findByUserName(loginRequestDto.getUserName());
             if(Role.EMPLOYEE.equals(user.getRole()) || Role.MANAGER.equals(user.getRole())){
-                return jwtService.generateToken(loginRequestDto.getUserName(), user.getRole());
+                return jwtService.generateToken(loginRequestDto.getUserName(), user.getRole() , user.getFullName());
             }
             return " user is not authorised";
         }
         return " user is not authenticated";
 
     }
-
 
 }

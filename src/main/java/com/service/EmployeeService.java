@@ -1,6 +1,8 @@
 package com.service;
 
+import com.dto.AddBranchRequestDto;
 import com.enums.CustomerStatus;
+import com.model.Branch;
 import com.model.Customer;
 
 import java.util.List;
@@ -13,7 +15,13 @@ public interface EmployeeService {
 
     String approveCustomer(Long customerId);
 
-    Customer rejectCustomer(Long id);
+    String rejectCustomer(Long customerId);
+
+    List<Branch> viewAllBranches();
+
+    String addNewBranch(AddBranchRequestDto addBranchRequestDto);
+
+    String deleteBranch(Long branchId);
 
     ;
 }

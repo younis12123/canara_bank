@@ -7,4 +7,5 @@ public enum CustomerStatus {
     FROZEN,
     CLOSED,
     REQUESTED,
+    REJECTED
 }

@@ -1,8 +1,9 @@
 package com.controller;
 
+import com.dto.AddBranchRequestDto;
+import com.model.Branch;
 import com.model.Customer;
 import com.service.EmployeeService;
-import com.serviceimpl.EmployeeServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,20 +22,35 @@ public class EmployeeController {
         return employeeService.viewAllActiveCustomers() ;
     }
 
-    @GetMapping("/addcustomer")
+    @GetMapping("/applications")
     public List<Customer> viewAllCustomersApplication() {
         return employeeService.viewAllCustomersApplication() ;
     }
 
-    @PatchMapping("/{customerId}/approve")
-    public ResponseEntity<String> approveCustomer(@PathVariable Long customerId ) {
+    @PatchMapping("applications/{customerId}/approve")
+    public ResponseEntity<String> approveCustomer(@PathVariable Long customerId) {
         return ResponseEntity.ok(employeeService.approveCustomer(customerId));
     }
 
-//    // ✅ Reject a specific application
-//    @PatchMapping("/{id}/reject")
-//    public ResponseEntity<Customer> rejectCustomer(@PathVariable Long customerId) {
-//        return ResponseEntity.ok(employeeService.rejectCustomer(customerId));
-//    }
+    @PatchMapping("applications/{customerId}/reject")
+    public ResponseEntity<String> rejectCustomer(@PathVariable Long customerId) {
+        return ResponseEntity.ok(employeeService.rejectCustomer(customerId));
+    }
+
+    @GetMapping ("/branches")
+    public List<Branch> viewAllBranches(){ return employeeService.viewAllBranches() ;}
+
+    @PostMapping("/branches/addbranch")
+    public  String addNewBranch(@RequestBody AddBranchRequestDto addBranchRequestDto){
+        return employeeService.addNewBranch(addBranchRequestDto);
+    }
+
+    @DeleteMapping("/branches/{branchId}")
+    public ResponseEntity<String> deleteBranch(@PathVariable Long branchId){
+        return ResponseEntity.ok(employeeService.deleteBranch(branchId));
+    }
+
+//    @PostMapping()
+//    public
 
 }

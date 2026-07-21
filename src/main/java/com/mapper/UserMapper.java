@@ -11,6 +11,7 @@ public class UserMapper {
     public static Users toUser(Customer customer){
         return Users.builder().userName(customer.getCustomerNumber()).
                 role(Role.CUSTOMER).createdAt(LocalDateTime.now()).
+                fullName(customer.getFullName()).
                 updatedAt(LocalDateTime.now()).build() ;
     }
 

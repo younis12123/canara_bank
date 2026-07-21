@@ -29,6 +29,9 @@ public class Users {
     @Enumerated(value = EnumType.STRING)
     private Role role ;
 
+    @Column(name = "full_name", nullable = false, length = 100)
+    private String fullName;
+
     @Builder.Default
     @Column(name = "is_enabled", nullable = false)
     private Boolean enabled = true;

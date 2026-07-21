@@ -19,4 +19,10 @@ public class CustomerUtils {
         return UUID.randomUUID().toString().substring(0, 8);
     }
 
+    public static String generateAccountNumber() {
+        Random random = new Random();
+        long number = 100000000000L + (long)(random.nextDouble() * 900000000000L);
+        return String.valueOf(number);
+    }
+
 }
