@@ -32,6 +32,15 @@ public class Users {
     @Column(name = "full_name", nullable = false, length = 100)
     private String fullName;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(name = "phone_number",
+            nullable = false,
+            unique = true,
+            length = 15)
+    private String phoneNumber;
+
     @Builder.Default
     @Column(name = "is_enabled", nullable = false)
     private Boolean enabled = true;
@@ -40,9 +49,7 @@ public class Users {
     @Column(name = "is_account_non_locked", nullable = false)
     private Boolean accountNonLocked = true;
 
-    @Builder.Default
-    @Column(name = "is_account_non_expired", nullable = false)
-    private Boolean accountNonExpired = true;
+    private LocalDateTime lockTime;
 
     @Builder.Default
     @Column(name = "first_login", nullable = false)

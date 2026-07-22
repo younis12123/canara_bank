@@ -46,7 +46,7 @@ public class AddCustomerRequestDto {
 
     @NotNull(message = "Phone number is required")
     @Digits(integer = 10, fraction = 0, message = "Phone number must be 10 digits")
-    private Long phoneNumber;
+    private String phoneNumber;
 
     private AddressDto address;
 

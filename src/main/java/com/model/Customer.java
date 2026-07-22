@@ -58,7 +58,7 @@ public class Customer {
     private String email;
 
     @Column(name = "phone_number", unique = true, nullable = false)
-    private Long phoneNumber;
+    private String phoneNumber;
 
     @OneToOne(
             mappedBy = "customer",

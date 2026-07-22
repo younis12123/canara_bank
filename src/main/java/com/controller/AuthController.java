@@ -1,8 +1,10 @@
 package com.controller;
 
 import com.dto.LoginRequestDto;
+import com.dto.VerifyOtpRequestDto;
 import com.serviceimpl.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,11 @@ public class AuthController {
     @PostMapping("/employee/login")
     public String EmployeeLogin(@RequestBody LoginRequestDto loginRequestDto)  {
         return loginService.employeeLogin(loginRequestDto) ;
+    }
+
+    @PostMapping("/verify-otp")
+    public ResponseEntity<?> verifyOtp(@RequestBody VerifyOtpRequestDto request) {
+        return loginService.verifyOtp(request);
     }
 
 

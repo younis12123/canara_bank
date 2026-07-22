@@ -55,6 +55,8 @@ public class CustomerMapper {
         return Users.builder().userName(customer.getCustomerNumber()).
                 role(Role.CUSTOMER).createdAt(LocalDateTime.now()).
                 fullName(customer.getFullName()).
+                email(customer.getEmail()).
+                phoneNumber(customer.getPhoneNumber()).
                 updatedAt(LocalDateTime.now()).build() ;
     }
 

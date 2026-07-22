@@ -107,6 +107,14 @@ public class MailService {
         }
     }
 
+    @Async
+    public void sendOtp(String email, String otp) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Banking otp");
+        message.setText("your otp is: "+otp);
+        javaMailSender.send(message);
+    }
 
 }
 

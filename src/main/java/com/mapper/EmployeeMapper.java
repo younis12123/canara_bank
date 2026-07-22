@@ -36,6 +36,8 @@ public class EmployeeMapper {
     public static Users toUser(Employee employee) {
 
         Users user = Users.builder().fullName(employee.getFullName()).
+                email(employee.getEmail()).
+                phoneNumber(employee.getPhoneNumber()).
                 createdAt(LocalDateTime.now()).build();
 
         if (employee.getDesignation() == Designation.BRANCH_MANAGER) {
