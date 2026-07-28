@@ -86,7 +86,8 @@ public class Employee {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "branch_id", nullable = false)
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonIgnore
     private Branch branch;
 
     @Column(name = "joining_date", nullable = false)
@@ -103,7 +104,8 @@ public class Employee {
     // Self Reference (Manager)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonIgnore
     private Employee manager;
 
     // Audit Fields

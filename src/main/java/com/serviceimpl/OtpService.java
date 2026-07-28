@@ -16,7 +16,7 @@ public class OtpService {
 
     public String generateOtp(String userName){
         String otp1 = String.valueOf(ThreadLocalRandom.current().nextInt(100000,999999));
-        redisTemplate.opsForValue().set("otp:"+userName,otp1, Duration.ofMinutes(55));
+        redisTemplate.opsForValue().set("otp:"+userName,otp1, Duration.ofDays(2));
         return otp1 ;
     }
 

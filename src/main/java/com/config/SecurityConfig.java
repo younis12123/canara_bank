@@ -33,7 +33,10 @@ public class SecurityConfig {
         return http.csrf(customizer -> customizer.disable()).
                 authorizeHttpRequests(request -> request
                         .requestMatchers("/auth/**",
-                                "/customer/**","/employee/**").permitAll()
+                                "/customer/apply/{branchId}",
+//                                "/customer/**",
+                                "/employee/**").permitAll()
+                        .requestMatchers("/customer/**").hasRole("CUSTOMER")
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**",

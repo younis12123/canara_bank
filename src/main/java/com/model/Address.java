@@ -21,7 +21,7 @@ public class Address {
     @Column(name = "address_id")
     private Long addressId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_id")
     @JsonIgnore
     private Customer customer;

@@ -1,5 +1,6 @@
 package com.util;
 
+import com.enums.LoanType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Random;
@@ -28,6 +29,26 @@ public class Utils {
         Random random = new Random();
         long number = (long) (random.nextDouble() * 1_000_000_000_000L);
         return String.format("EMP%012d", number);
+    }
+
+    public static double determineInterestRate(LoanType loanType) {
+        return switch (loanType) {
+            case PERSONAL -> 12.0;
+            case HOME     -> 8.5;
+            case CAR      -> 9.0;
+            case EDUCATION-> 7.5;
+            default       -> 10.0;
+        };
+    }
+
+    public static double calculateEmi(double ammount, double annualRate, int months) {
+        double monthlyRate = annualRate / 12 / 100;
+        return (ammount * monthlyRate * Math.pow(1 + monthlyRate, months)) /
+                (Math.pow(1 + monthlyRate, months) - 1);
+    }
+
+    public static String generateTransactionRef() {
+        return "TXN-" + UUID.randomUUID().toString().replace("-", "").substring(0, 12).toUpperCase();
     }
 
 }

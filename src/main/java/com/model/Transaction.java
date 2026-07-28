@@ -2,6 +2,7 @@ package com.model;
 
 import com.enums.TransactionStatus;
 import com.enums.TransactionType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Transcation {
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,12 +44,6 @@ public class Transcation {
     @Column(nullable = false, precision = 18, scale = 2)
     private BigDecimal amount;
 
-    @Column(name = "available_balance",
-            nullable = false,
-            precision = 18,
-            scale = 2)
-    private BigDecimal availableBalance;
-
     @Column(length = 255)
     private String description;
 
@@ -67,4 +62,9 @@ public class Transcation {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false)
+    @JsonIgnore
+    private Customer customer;
 }
